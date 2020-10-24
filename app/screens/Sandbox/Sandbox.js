@@ -1,5 +1,6 @@
 import React from 'react';
-import { Body, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
+import { Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
+import { Container, Header, Left, Body, Right, Icon } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -23,29 +24,26 @@ export default class Sandbox extends React.Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <LinearGradient
+          <Container>
+          <Header>
+            <Left>
+            <Button transparent>
+              <Icon name="arrow-back" type="Ionicons" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Header</Title>
+            </Body>
+
+          </Header>
+          <LinearGradient
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}
                     >
-                <CardFlip style={styles.cardContainer}
-                flipDirection={'x'}
-                 ref={card => (this.card = card)}>
-                    <TouchableOpacity
-                    activeOpacity={1}
-                    style={[styles.card, styles.card1]}
-                    onPress={() => this.card.flip()}>
-                    <Text style={styles.label}>AB</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    activeOpacity={1}
-                    style={[styles.card, styles.card2]}
-                    onPress={() => this.card.flip()}>
-                    <Text style={styles.label}>CD</Text>
-                    </TouchableOpacity>
-                </CardFlip>
             
                      
             </LinearGradient>
+        </Container>
         )
         
 

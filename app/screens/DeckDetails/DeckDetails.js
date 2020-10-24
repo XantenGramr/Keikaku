@@ -1,5 +1,5 @@
 import React from 'react';
-import { Body, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
+import { Header, Left, Body, Icon, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { StyleSheet, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -80,23 +80,41 @@ export default class DeckDetails extends React.Component {
         });
     }
 
+    goBack = () => {
+        const { navigate } = this.props.navigation;
+        navigate("Weekly");
+    }
+
     static navigationOptions = {
         title: 'DeckDetails',
         headerShown: false,
     };
+    
 
     renderDeckDetails() {
         const { navigate } = this.props.navigation;
         const { route } = this.props;
 
         return (
-                <LinearGradient
-                    colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
-                    style={styles.linearGradient}
-                    >
+            <Container>
+            <Header>
+              <Left>
+              <Button transparent onPress={this.goBack}>
+                <Icon name="arrow-back" type="Ionicons" />
+                </Button>
+              </Left>
+              <Body>
+                <Title>Details</Title>
+              </Body>
+  
+            </Header>
+            <LinearGradient
+                      colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
+                      style={styles.linearGradient}
+                      >
                     <Row size={1}></Row>
                     <Row size={4} style={{ flex:1, justifyContent:"center"}}>
-                        <Text style={{ fontFamily: 'PineappleParty', fontSize: 60 }}>{this.state.day}</Text>
+                        <Text style={{ fontFamily: 'PineappleParty', fontSize: 53 }}>{this.state.day}</Text>
                     </Row>
                     <Row size={1}></Row>
                     <Row size={1}>
@@ -129,7 +147,9 @@ export default class DeckDetails extends React.Component {
                         </Button>
                     </Row>
                     <Row size={1}></Row>
-                </LinearGradient>
+                       
+              </LinearGradient>
+          </Container>
         );
 
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Body, Container, Title, Header, Content, Text, Thumbnail, StyleProvider, Button, ListItem, CheckBox } from 'native-base';
+import { Body, Title, Header, Text, Button, ListItem, CheckBox, Icon, Left, Container, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Database from '../../database/Database';
 import styles from './styles/styles';
@@ -10,6 +10,7 @@ export default class Randomize extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            showToast: false,
             isReady: false,
             sun: false,
             mon: false,
@@ -146,21 +147,28 @@ export default class Randomize extends React.Component {
     }
 
     randomize = () => {
-        // Alert.alert("Hold on!", "Are you sure you want to go randomize?", [
-        //     {
-        //       text: "Cancel",
-        //       onPress: () => null,
-        //       style: "cancel"
-        //     },
-        //     { text: "YES", onPress: () => {
-        //         this._randomize();
-        //         const { navigate } = this.props.navigation;
-        //         navigate("Weekly");
-        //       }}
-        //   ]);
-        this._randomize();
+        Alert.alert("Hold on!", "Randomize will reset all your progress, proceed?", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => {
+                this._randomize();
+                const { navigate } = this.props.navigation;
+                Toast.show({
+                    text: "Data Randomized!",
+                    duration: 2000
+                })
+                navigate("Home");
+              }}
+          ]);
     }
 
+    goBack = () => {
+        const { navigate } = this.props.navigation;
+        navigate("Home");
+    }
 
     static navigationOptions = {
         title: 'Randomize',
@@ -170,11 +178,23 @@ export default class Randomize extends React.Component {
     renderSchedule() {
         const { navigate } = this.props.navigation;
         return (
-            <LinearGradient
-                colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
-                style={styles.linearGradient}
-                >
-                 <ListItem onPress={() => this.setState({ sun: !this.state.sun })}>
+            <Container>
+          <Header>
+            <Left>
+            <Button transparent onPress={this.goBack}>
+              <Icon name="arrow-back" type="Ionicons" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Randomize and Schedule</Title>
+            </Body>
+
+          </Header>
+          <LinearGradient
+                    colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
+                    style={styles.linearGradient}
+                    >
+            <ListItem onPress={() => this.setState({ sun: !this.state.sun })}>
                      <CheckBox checked={this.state.sun}/>
                      <Body>
                          <Text>Sunday</Text>
@@ -230,7 +250,10 @@ export default class Randomize extends React.Component {
                      </Row>
                      <Row size={1}></Row>
                  </Grid>
+                     
             </LinearGradient>
+        </Container>
+            
     );
     }
 

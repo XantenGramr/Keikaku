@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Button, Icon, Thumbnail } from 'native-base';
+import { Text, Button, Icon, Thumbnail, Header, Container, Left, Body, Title } from 'native-base';
 import { Row, Grid, Col } from 'react-native-easy-grid';
 import { Image, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,7 +7,6 @@ import Database from '../../database/Database';
 import styles from './styles/styles';
 
 let DATABASE_VERSION = 5;
-
 
 export default class Home extends React.Component {
     constructor(props){
@@ -53,23 +52,20 @@ export default class Home extends React.Component {
     renderHomeScreen() {
         const { navigate } = this.props.navigation;
         return (
-                <LinearGradient
-                    colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
-                    style={styles.linearGradient}
-                    >
-                    <Grid>
-                        <Row size={1}>
-                            <Col size={1}>
-                                    <Button transparent>
-                                        <Image style={{width:'80%', height:'100%'}} resizeMode={'stretch'} source={require('./images/back-1.png')}/>
-                                    </Button>
-                            </Col>
-                            <Col size={1}></Col>
-                            <Col size={1}></Col>
-                            <Col size={1}>
-                            </Col>
-                            <Col size={1}></Col>
-                        </Row>
+            <Container>
+            <Header>
+              <Left>
+              </Left>
+              <Body>
+                <Title>Home</Title>
+              </Body>
+  
+            </Header>
+            <LinearGradient
+                      colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
+                      style={styles.linearGradient}
+                      >
+              <Grid>
                         <Row size={2}>
                             <Image resizeMode={'stretch'} style={{width:'50%'}} source={require('./images/kei.png')}/>
                             <Image resizeMode={'stretch'} style={{width:'50%'}} source={require('./images/kaku.png')}/>
@@ -102,8 +98,9 @@ export default class Home extends React.Component {
                             </Button>
                         </Row>
                     </Grid>
-
-                </LinearGradient>
+                       
+              </LinearGradient>
+          </Container>
         );
     }
 

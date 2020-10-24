@@ -1,10 +1,11 @@
 import React from 'react';
-import { Body, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
+import { Body, Header, Left, Icon, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { StyleSheet, Image, View, TouchableOpacity, BackHandler, Alert } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper';
 import Database from '../../database/Database';
+import FlipCard from 'react-native-flip-card'
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -23,31 +24,9 @@ export default class Review extends React.Component {
         console.log(this.state.day);
     }
 
-    backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to go back?", [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel"
-          },
-          { text: "YES", onPress: () => {
-              const { navigate } = this.props.navigation;
-              navigate("Weekly");
-            }}
-        ]);
-        return true;
-      };
-    
-
     componentDidMount() {
         console.log("DeckDetails Screen Init");
         this._init();
-
-        this.backHandler = BackHandler.addEventListener(
-            "hardwareBackPress",
-            this.backAction
-          );
-
         return true;
     }
 
@@ -113,6 +92,11 @@ export default class Review extends React.Component {
         })
     }
 
+    goBack = () => {
+        const { navigate } = this.props.navigation;
+        navigate("Weekly");
+    }
+
     static navigationOptions = {
         title: 'DeckDetails',
         headerShown: false,
@@ -131,12 +115,24 @@ export default class Review extends React.Component {
                     style={styles.linearGradient} key={element.id}
                     >
                         <Row size={1}></Row>
-                        <Row size={6} style={{ flex:1, justifyContent:"center"}}>
-                            <Text style={{ fontFamily: 'PineappleParty', fontSize: 65 }}>{element.kanji}</Text>
-                        </Row>
-                        <Row size={1}></Row>
-                        <Row size={3}>
-                            <Text style={{ fontFamily: 'PineappleParty', fontSize: 30 }}>{this.state.answer}</Text>
+                        <Row size={6} >
+                            <Col size={1}></Col>
+                            <Col size={5} style={{ backgroundColor:"white", justifyContent:"center", alignContent:"center"}}>
+                                <Row style={{ backgroundColor:"white", justifyContent:"center", alignContent:"center"}}>
+                                <FlipCard>
+                                    {/* Face Side */}
+                                    <View style={styles.face}>
+                                        <Text style={{ fontFamily: 'PineappleParty', fontSize: 65 }}>{element.kanji}</Text>
+                                        
+                                    </View>
+                                    {/* Back Side */}
+                                    <View style={styles.back}>
+                                    <Text style={{ fontFamily: 'PineappleParty', fontSize: 30 }}>{element.answer}</Text>
+                                    </View>
+                                </FlipCard>
+                                </Row>
+                            </Col>
+                            <Col size={1}></Col>
                         </Row>
                         <Row size={1}></Row>
                         <Row size={1}>
@@ -159,26 +155,41 @@ export default class Review extends React.Component {
                                 </Button>
                            </Col>
                         </Row>
-                        <Row size={1}>
-                            <Button style={{flex:1}} large rounded block start onPress={() => this.showAnswer(element.answer)}>
-                                <Text style={{fontFamily: 'PineappleParty'}}>show answer</Text>
-                            </Button>
-                        </Row>
+                        <Row size={1}></Row>
                         
                 </LinearGradient>
             );
         })
 
         return (
-            <Swiper style={styles.wrapper} 
-            showsButtons={false} 
-            loop={false}
-            loadMinimal={true}
-            showsPagination={false}
-            onScroll={this.resetState}
-            >
-                {renderedCards}
-            </Swiper>
+            <Container>
+            <Header>
+                <Left>
+                <Button transparent onPress={this.goBack}>
+                <Icon name="arrow-back" type="Ionicons" />
+                </Button>
+                </Left>
+                <Body>
+                <Title>Flashcard</Title>
+                </Body>
+
+            </Header>
+            <LinearGradient
+                        colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
+                        style={styles.linearGradient}
+                        >
+                
+                <Swiper style={styles.wrapper} 
+                    showsButtons={false} 
+                    loop={false}
+                    loadMinimal={true}
+                    showsPagination={false}
+                    onScroll={this.resetState}
+                    >
+                        {renderedCards}
+                    </Swiper>
+                </LinearGradient>
+            </Container>
         );
 
     }

@@ -9,6 +9,9 @@ import DeckDetails from './app/screens/DeckDetails/DeckDetails';
 import Review from './app/screens/Review/Review';
 import Sandbox from './app/screens/Sandbox/Sandbox';
 
+import React from 'react';
+import { Root } from 'native-base';
+
 const Navigator = createStackNavigator({
     Home: { screen: Home },
     Randomize: { screen: Randomize },
@@ -20,4 +23,7 @@ const Navigator = createStackNavigator({
 
 const App = createAppContainer(Navigator);
 
-export default App;
+export default () => 
+<Root>
+  <App />
+</Root>;

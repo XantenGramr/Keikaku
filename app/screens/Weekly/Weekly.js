@@ -1,5 +1,5 @@
 import React from 'react';
-import { Body, Container, Title, Header, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
+import { Body, Container, Left, Icon, Title, Header, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { StyleSheet, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -65,6 +65,11 @@ export default class Weekly extends React.Component {
         })
     }
 
+    goBack = () => {
+        const { navigate } = this.props.navigation;
+        navigate("Home");
+    }
+
     renderWeekly() {
         const { navigate } = this.props.navigation;
         const { route } = this.props;
@@ -87,20 +92,33 @@ export default class Weekly extends React.Component {
         })
 
         return (
-                <LinearGradient
-                    colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
-                    style={styles.linearGradient}
-                    >
+            <Container>
+            <Header>
+              <Left>
+              <Button transparent onPress={this.goBack}>
+                <Icon name="arrow-back" type="Ionicons" />
+                </Button>
+              </Left>
+              <Body>
+                <Title>{this.state.topic}</Title>
+              </Body>
+  
+            </Header>
+            <LinearGradient
+                      colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
+                      style={styles.linearGradient}
+                      >
                     <Row size={1}></Row>
                     {renderedButtons}
-                    <Row size={1}></Row>
                     <Row size={1}>
                         <Button style={{flex:1}} large rounded block disabled sunday>
                             <Text style={{fontFamily: 'PineappleParty'}}>WEEKness</Text>
                         </Button>
                     </Row>
                     <Row size={1}></Row>
-                </LinearGradient>
+                       
+              </LinearGradient>
+          </Container>
         );
 
     }
