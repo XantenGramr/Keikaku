@@ -117,9 +117,16 @@ export default class Review extends React.Component {
                         <Row size={1}></Row>
                         <Row size={6} >
                             <Col size={1}></Col>
-                            <Col size={5} style={{ backgroundColor:"white", justifyContent:"center", alignContent:"center"}}>
-                                <Row style={{ backgroundColor:"white", justifyContent:"center", alignContent:"center"}}>
-                                <FlipCard>
+                            <Col size={5} style={{ justifyContent:"center", alignContent:"center"}}>
+                                <FlipCard 
+                                    style={styles.card}
+                                    friction={6}
+                                    perspective={1000}
+                                    flipHorizontal={true}
+                                    flipVertical={false}
+                                    flip={false}
+                                    clickable={true}
+                                    >
                                     {/* Face Side */}
                                     <View style={styles.face}>
                                         <Text style={{ fontFamily: 'PineappleParty', fontSize: 65 }}>{element.kanji}</Text>
@@ -130,7 +137,6 @@ export default class Review extends React.Component {
                                     <Text style={{ fontFamily: 'PineappleParty', fontSize: 30 }}>{element.answer}</Text>
                                     </View>
                                 </FlipCard>
-                                </Row>
                             </Col>
                             <Col size={1}></Col>
                         </Row>

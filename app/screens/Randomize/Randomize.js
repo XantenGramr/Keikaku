@@ -5,6 +5,7 @@ import { StyleSheet, Image, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Database from '../../database/Database';
 import styles from './styles/styles';
+import CustomHeader from '../../components/CustomHeader';
 
 export default class Randomize extends React.Component {
     constructor(props) {
@@ -165,11 +166,6 @@ export default class Randomize extends React.Component {
           ]);
     }
 
-    goBack = () => {
-        const { navigate } = this.props.navigation;
-        navigate("Home");
-    }
-
     static navigationOptions = {
         title: 'Randomize',
         headerShown: false,
@@ -179,17 +175,7 @@ export default class Randomize extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <Container>
-          <Header>
-            <Left>
-            <Button transparent onPress={this.goBack}>
-              <Icon name="arrow-back" type="Ionicons" />
-              </Button>
-            </Left>
-            <Body>
-              <Title>Randomize and Schedule</Title>
-            </Body>
-
-          </Header>
+                <CustomHeader navigation={this.props.navigation} title="Randomize and Schedule" backButtonTo="Home"/>
           <LinearGradient
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}

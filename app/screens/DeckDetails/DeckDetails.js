@@ -80,6 +80,17 @@ export default class DeckDetails extends React.Component {
         });
     }
 
+    checkCards = () => {
+        var day = this.state.day;
+        console.log(day);
+        
+        const { navigate } = this.props.navigation;
+
+        navigate('CardList', {
+            day: day,
+        });
+    }
+
     goBack = () => {
         const { navigate } = this.props.navigation;
         navigate("Weekly");
@@ -142,8 +153,13 @@ export default class DeckDetails extends React.Component {
                         </Col>
                     </Row>
                     <Row size={1}>
+                        <Button style={{flex:1}} large rounded block start onPress={this.checkCards}>
+                            <Text style={{fontFamily: 'PineappleParty'}}>Check Cards</Text>
+                        </Button>
+                    </Row>
+                    <Row size={1}>
                         <Button style={{flex:1}} large rounded block start onPress={this.startReview}>
-                            <Text style={{fontFamily: 'PineappleParty'}}>Start</Text>
+                            <Text style={{fontFamily: 'PineappleParty'}}>Start Review</Text>
                         </Button>
                     </Row>
                     <Row size={1}></Row>
