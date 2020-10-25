@@ -4,6 +4,8 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { StyleSheet, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Database from '../../database/Database';
+import CustomHeader from '../../components/CustomHeader';
+import styles from '../../components/Styles';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -23,10 +25,23 @@ export default class DeckDetails extends React.Component {
         console.log(this.state.day);
     }
 
+    navigationSubcription;
+
     componentDidMount() {
         console.log("DeckDetails Screen Init");
+        this.navigationSubscription = this.props.navigation.addListener('didFocus', this.onFocus);
+
         this._init();
         return true;
+    }
+
+    componentWillUnmount() {
+        this.navigationSubscription.remove();
+    }
+
+    onFocus = (payload) => {
+        this.setState({isReady: false});
+        this._init();
     }
 
     _init = async () => {
@@ -54,7 +69,7 @@ export default class DeckDetails extends React.Component {
             }
         }
 
-        var score  = "Correct: " + correct + " | Incorrect: " + wrong;
+        var score  = "Correct: " + correct + "   Incorrect: " + wrong;
         var remainingItems = "Remaining Items : " + remaining;
         var completed = "Completed Items : " + done;
 
@@ -91,11 +106,6 @@ export default class DeckDetails extends React.Component {
         });
     }
 
-    goBack = () => {
-        const { navigate } = this.props.navigation;
-        navigate("Weekly");
-    }
-
     static navigationOptions = {
         title: 'DeckDetails',
         headerShown: false,
@@ -108,58 +118,52 @@ export default class DeckDetails extends React.Component {
 
         return (
             <Container>
-            <Header>
-              <Left>
-              <Button transparent onPress={this.goBack}>
-                <Icon name="arrow-back" type="Ionicons" />
-                </Button>
-              </Left>
-              <Body>
-                <Title>Details</Title>
-              </Body>
-  
-            </Header>
+            <CustomHeader
+                    navigation={this.props.navigation}
+                    title="Details"
+                    backButtonTo="Weekly"/>
+
             <LinearGradient
                       colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                       style={styles.linearGradient}
                       >
                     <Row size={1}></Row>
-                    <Row size={4} style={{ flex:1, justifyContent:"center"}}>
-                        <Text style={{ fontFamily: 'PineappleParty', fontSize: 53 }}>{this.state.day}</Text>
+                    <Row size={3} style={{ flex:1, justifyContent:"center"}}>
+                        <Text style={styles.titleText}>{this.state.day}</Text>
                     </Row>
                     <Row size={1}></Row>
                     <Row size={1}>
                         <Col size={1}></Col>
                         <Col size={8}>
-                            <Text style={{fontSize: 25}}>{this.state.statistics}</Text>
+                            <Text style={styles.text}>{this.state.statistics}</Text>
                         </Col>
                     </Row>
                     <Row size={1}>
                         <Col size={1}></Col>
                         <Col size={8}>
-                            <Text style={{fontSize: 25}}>{this.state.score}</Text>
+                            <Text style={styles.text}>{this.state.score}</Text>
                         </Col>
                     </Row>
                     <Row size={1}>
                         <Col size={1}></Col>
                         <Col size={8}>
-                            <Text style={{fontSize: 25}}>{this.state.remaining}</Text>
+                            <Text style={styles.text}>{this.state.remaining}</Text>
                         </Col>
                     </Row>
                     <Row size={1}>
                         <Col size={1}></Col>
                         <Col size={8}>
-                            <Text style={{fontSize: 25}}>{this.state.done}</Text>
+                            <Text style={styles.text}>{this.state.done}</Text>
                         </Col>
                     </Row>
                     <Row size={1}>
                         <Button style={{flex:1}} large rounded block start onPress={this.checkCards}>
-                            <Text style={{fontFamily: 'PineappleParty'}}>Check Cards</Text>
+                            <Text uppercase={false} style={styles.text}>Check Cards</Text>
                         </Button>
                     </Row>
                     <Row size={1}>
                         <Button style={{flex:1}} large rounded block start onPress={this.startReview}>
-                            <Text style={{fontFamily: 'PineappleParty'}}>Start Review</Text>
+                            <Text uppercase={false} style={styles.text}>Start Review</Text>
                         </Button>
                     </Row>
                     <Row size={1}></Row>
@@ -186,17 +190,3 @@ export default class DeckDetails extends React.Component {
     }
 
 }
-
-const styles = StyleSheet.create({
-    objects: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    
-    linearGradient: {
-        flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-    },
-});

@@ -6,6 +6,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper';
 import Database from '../../database/Database';
 import FlipCard from 'react-native-flip-card'
+import CustomHeader from '../../components/CustomHeader';
+import styles from '../../components/Styles';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -148,7 +150,7 @@ export default class Review extends React.Component {
                                     transparent={element.isWrong  || this.state.isWrong} 
                                     disabled={element.isWrong || this.state.isWrong} large rounded block start
                                     onPress={() => this.saveWrong(element.id, element.primaryKey)}>
-                                    <Text style={{fontFamily: 'PineappleParty'}}>Incorrect</Text>
+                                    <Text style={styles.text}>Incorrect</Text>
                                 </Button>
                            </Col>
                            <Col size={1}>
@@ -157,7 +159,7 @@ export default class Review extends React.Component {
                                     transparent={element.isCorrect || this.state.isCorrect} 
                                     disabled={element.isCorrect || this.state.isCorrect} large rounded block start
                                     onPress={() => this.saveCorrect(element.id, element.primaryKey)}>
-                                    <Text style={{fontFamily: 'PineappleParty'}}>Correct</Text>
+                                    <Text style={styles.text}>Correct</Text>
                                 </Button>
                            </Col>
                         </Row>
@@ -169,17 +171,10 @@ export default class Review extends React.Component {
 
         return (
             <Container>
-            <Header>
-                <Left>
-                <Button transparent onPress={this.goBack}>
-                <Icon name="arrow-back" type="Ionicons" />
-                </Button>
-                </Left>
-                <Body>
-                <Title>Flashcard</Title>
-                </Body>
-
-            </Header>
+            <CustomHeader
+                    navigation={this.props.navigation}
+                    title="Flashcards Review"
+                    backButtonTo="DeckDetails"/>
             <LinearGradient
                         colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                         style={styles.linearGradient}
@@ -208,7 +203,7 @@ export default class Review extends React.Component {
             colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
             style={styles.linearGradient}
             >
-                <Text>Loading...</Text>
+                <Text style={styles.text}>Loading...</Text>
             </LinearGradient>
         )
         
@@ -216,47 +211,3 @@ export default class Review extends React.Component {
     }
 
 }
-
-const styles = StyleSheet.create({
-    objects: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    
-    linearGradient: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    cardContainer: {
-      width: 320,
-      height: 470,
-    },
-    card: {
-      width: 320,
-      height: 470,
-      backgroundColor: '#FE474C',
-      borderRadius: 5,
-      shadowColor: 'rgba(0,0,0,0.5)',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.5,
-    },
-    card1: {
-      backgroundColor: '#FE474C',
-    },
-    card2: {
-      backgroundColor: '#FEB12C',
-    },
-    label: {
-      lineHeight: 470,
-      textAlign: 'center',
-      fontSize: 55,
-      fontFamily: 'System',
-      color: '#ffffff',
-      backgroundColor: 'transparent',
-    },
-  });

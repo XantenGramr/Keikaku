@@ -4,6 +4,8 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { StyleSheet, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Database from '../../database/Database';
+import CustomHeader from '../../components/CustomHeader';
+import styles from '../../components/Styles';
 
 export default class Weekly extends React.Component {
     constructor(props){
@@ -65,11 +67,6 @@ export default class Weekly extends React.Component {
         })
     }
 
-    goBack = () => {
-        const { navigate } = this.props.navigation;
-        navigate("Home");
-    }
-
     renderWeekly() {
         const { navigate } = this.props.navigation;
         const { route } = this.props;
@@ -83,8 +80,8 @@ export default class Weekly extends React.Component {
             } else {
                 return (
                     <Row size={1} key={d.id}>
-                            <Button style={{flex:1}} large rounded block onPress={d.action}>
-                            <Text style={{fontFamily: 'PineappleParty'}}>{d.day}</Text>
+                        <Button style={{flex:1}} large rounded block onPress={d.action}>
+                            <Text uppercase={false} style={styles.text}>{d.day}</Text>
                         </Button>
                     </Row>
                 );
@@ -93,17 +90,11 @@ export default class Weekly extends React.Component {
 
         return (
             <Container>
-            <Header>
-              <Left>
-              <Button transparent onPress={this.goBack}>
-                <Icon name="arrow-back" type="Ionicons" />
-                </Button>
-              </Left>
-              <Body>
-                <Title>{this.state.topic}</Title>
-              </Body>
+                <CustomHeader
+                    navigation={this.props.navigation}
+                    title={this.state.topic}
+                    backButtonTo="Home"/>
   
-            </Header>
             <LinearGradient
                       colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                       style={styles.linearGradient}
@@ -112,7 +103,7 @@ export default class Weekly extends React.Component {
                     {renderedButtons}
                     <Row size={1}>
                         <Button style={{flex:1}} large rounded block disabled sunday>
-                            <Text style={{fontFamily: 'PineappleParty'}}>WEEKness</Text>
+                            <Text uppercase={false} style={styles.text}>WEEKness</Text>
                         </Button>
                     </Row>
                     <Row size={1}></Row>
@@ -139,17 +130,3 @@ export default class Weekly extends React.Component {
     }
 
 }
-
-const styles = StyleSheet.create({
-    objects: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    
-    linearGradient: {
-        flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center',
-    },
-});

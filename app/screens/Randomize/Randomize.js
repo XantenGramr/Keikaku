@@ -4,7 +4,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { StyleSheet, Image, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Database from '../../database/Database';
-import styles from './styles/styles';
+import styles from '../../components/Styles';
 import CustomHeader from '../../components/CustomHeader';
 
 export default class Randomize extends React.Component {
@@ -175,7 +175,10 @@ export default class Randomize extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <Container>
-                <CustomHeader navigation={this.props.navigation} title="Randomize and Schedule" backButtonTo="Home"/>
+                <CustomHeader
+                    navigation={this.props.navigation}
+                    title="Schedule"
+                    backButtonTo="Home"/>
           <LinearGradient
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}
@@ -183,55 +186,55 @@ export default class Randomize extends React.Component {
             <ListItem onPress={() => this.setState({ sun: !this.state.sun })}>
                      <CheckBox checked={this.state.sun}/>
                      <Body>
-                         <Text>Sunday</Text>
+                         <Text style={styles.listText}>Sunday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ mon: !this.state.mon })}>
                      <CheckBox checked={this.state.mon}/>
                      <Body>
-                         <Text>Monday</Text>
+                         <Text style={styles.listText}>Monday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ tue: !this.state.tue })}>
                      <CheckBox checked={this.state.tue}/>
                      <Body>
-                         <Text>Tueday</Text>
+                         <Text style={styles.listText}>Tueday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ wed: !this.state.wed })}>
                      <CheckBox checked={this.state.wed}/>
                      <Body>
-                         <Text>Wednesday</Text>
+                         <Text style={styles.listText}>Wednesday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ thu: !this.state.thu })}>
                      <CheckBox checked={this.state.thu}/>
                      <Body>
-                         <Text>Thursday</Text>
+                         <Text style={styles.listText}>Thursday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ fri: !this.state.fri })}>
                      <CheckBox checked={this.state.fri}/>
                      <Body>
-                         <Text>Friday</Text>
+                         <Text style={styles.listText}>Friday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ sat: !this.state.sat })}>
                      <CheckBox checked={this.state.sat}/>
                      <Body>
-                         <Text>Saturday</Text>
+                         <Text style={styles.listText}>Saturday</Text>
                      </Body>
                  </ListItem>
                  <Grid>
                      <Row size={1}></Row>
                      <Row size={1}>
                         <Button style={{flex:1}} large rounded block randomize onPress={this.randomize}>
-                            <Text style={{fontFamily: 'PineappleParty'}}>Randomize</Text>
+                            <Text uppercase={false} style={styles.text}>Randomize</Text>
                         </Button>
                      </Row>
                      <Row size={1}>
                         <Button style={{flex:1}} large rounded block goback onPress={() => navigate('Home')}>
-                            <Text style={{fontFamily: 'PineappleParty'}}>Go Back</Text>
+                            <Text uppercase={false} style={styles.text}>Go Back</Text>
                         </Button>
                      </Row>
                      <Row size={1}></Row>
@@ -251,7 +254,7 @@ export default class Randomize extends React.Component {
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}
                     >
-                     <Text>Loading</Text>
+                     <Text style={styles.text}>Loading</Text>
                 </LinearGradient>
         )
     }

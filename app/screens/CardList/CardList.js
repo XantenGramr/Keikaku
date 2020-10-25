@@ -6,6 +6,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper';
 import Database from '../../database/Database';
 import FlipCard from 'react-native-flip-card'
+import CustomHeader from '../../components/CustomHeader';
+import styles from '../../components/Styles';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -49,12 +51,6 @@ export default class CardList extends React.Component {
         this.setState({isReady: true});
     }
 
-
-    goBack = () => {
-        const { navigate } = this.props.navigation;
-        navigate("Weekly");
-    }
-
     static navigationOptions = {
         title: 'CardList',
         headerShown: false,
@@ -69,8 +65,8 @@ export default class CardList extends React.Component {
             return (
                 <ListItem avatar key={element.id}>
                     <Body>
-                        <Text>{element.kanji}</Text>
-                        <Text>{element.answer}</Text>
+                        <Text style={styles.cardListText}>{element.kanji}</Text>
+                        <Text style={styles.cardListText}>{element.answer}</Text>
                     </Body>
                 </ListItem>
             );
@@ -78,22 +74,15 @@ export default class CardList extends React.Component {
 
         return (
             <Container>
-            <Header>
-              <Left>
-              <Button transparent onPress={this.goBack}>
-                <Icon name="arrow-back" type="Ionicons" />
-                </Button>
-              </Left>
-              <Body>
-                <Title>Details</Title>
-              </Body>
-  
-            </Header>
-                <ScrollView>
+            <CustomHeader
+                    navigation={this.props.navigation}
+                    title="Details"
+                    backButtonTo="DeckDetails"/>
+            <ScrollView>
                 <List>
                     {renderedCards}
                 </List>
-                </ScrollView>
+            </ScrollView>
           </Container>
         );
 
@@ -116,46 +105,3 @@ export default class CardList extends React.Component {
 
 }
 
-const styles = StyleSheet.create({
-    objects: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    
-    linearGradient: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    cardContainer: {
-      width: 320,
-      height: 470,
-    },
-    card: {
-      width: 320,
-      height: 470,
-      backgroundColor: '#FE474C',
-      borderRadius: 5,
-      shadowColor: 'rgba(0,0,0,0.5)',
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.5,
-    },
-    card1: {
-      backgroundColor: '#FE474C',
-    },
-    card2: {
-      backgroundColor: '#FEB12C',
-    },
-    label: {
-      lineHeight: 470,
-      textAlign: 'center',
-      fontSize: 55,
-      fontFamily: 'System',
-      color: '#ffffff',
-      backgroundColor: 'transparent',
-    },
-  });

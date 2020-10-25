@@ -35,6 +35,10 @@
 		282B740482EA40A3B80D9E65 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE9746954370403B9758751F /* rubicon-icon-font.ttf */; };
 		D8C377BAE2AA4C2DB80D2422 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DFF3BB94E764FC39A5289AE /* SimpleLineIcons.ttf */; };
 		9BD03FC2596440618932465B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDB7ED5A8A10491FB4FF4EFB /* Zocial.ttf */; };
+		DF21290983184B41A0FEE97F /* Bittermilk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83142C5C117E402FB993172B /* Bittermilk.ttf */; };
+		13A8F38DA53E4B898229DDF8 /* Blueberry.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0537094278B647D6B3F01C9D /* Blueberry.ttf */; };
+		BED10DEC291B4F7D9EA62E19 /* Little Zombie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9889B2D497AE4C26B264937B /* Little Zombie.ttf */; };
+		A36F74B789754260A7EC34A2 /* Lemon Juice.otf in Resources */ = {isa = PBXBuildFile; fileRef = AFF13E9FB23646719F8E26B3 /* Lemon Juice.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +93,10 @@
 		CE9746954370403B9758751F /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		2DFF3BB94E764FC39A5289AE /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EDB7ED5A8A10491FB4FF4EFB /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		83142C5C117E402FB993172B /* Bittermilk.ttf */ = {isa = PBXFileReference; name = "Bittermilk.ttf"; path = "../assets/fonts/Bittermilk.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0537094278B647D6B3F01C9D /* Blueberry.ttf */ = {isa = PBXFileReference; name = "Blueberry.ttf"; path = "../assets/fonts/Blueberry.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9889B2D497AE4C26B264937B /* Little Zombie.ttf */ = {isa = PBXFileReference; name = "Little Zombie.ttf"; path = "../assets/fonts/Little Zombie.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AFF13E9FB23646719F8E26B3 /* Lemon Juice.otf */ = {isa = PBXFileReference; name = "Lemon Juice.otf"; path = "../assets/fonts/Lemon Juice.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +226,10 @@
 				CE9746954370403B9758751F /* rubicon-icon-font.ttf */,
 				2DFF3BB94E764FC39A5289AE /* SimpleLineIcons.ttf */,
 				EDB7ED5A8A10491FB4FF4EFB /* Zocial.ttf */,
+				83142C5C117E402FB993172B /* Bittermilk.ttf */,
+				0537094278B647D6B3F01C9D /* Blueberry.ttf */,
+				9889B2D497AE4C26B264937B /* Little Zombie.ttf */,
+				AFF13E9FB23646719F8E26B3 /* Lemon Juice.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -380,6 +392,10 @@
 				282B740482EA40A3B80D9E65 /* rubicon-icon-font.ttf in Resources */,
 				D8C377BAE2AA4C2DB80D2422 /* SimpleLineIcons.ttf in Resources */,
 				9BD03FC2596440618932465B /* Zocial.ttf in Resources */,
+				DF21290983184B41A0FEE97F /* Bittermilk.ttf in Resources */,
+				13A8F38DA53E4B898229DDF8 /* Blueberry.ttf in Resources */,
+				BED10DEC291B4F7D9EA62E19 /* Little Zombie.ttf in Resources */,
+				A36F74B789754260A7EC34A2 /* Lemon Juice.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
