@@ -190,37 +190,37 @@ export default class Randomize extends React.Component {
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ mon: !this.state.mon })}>
-                     <CheckBox checked={this.state.mon}/>
+                     <CheckBox checked={this.state.mon} onPress={() => this.setState({ mon: !this.state.mon })}/>
                      <Body>
                          <Text style={styles.listText}>Monday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ tue: !this.state.tue })}>
-                     <CheckBox checked={this.state.tue}/>
+                     <CheckBox checked={this.state.tue} onPress={() => this.setState({ tue: !this.state.tue })}/>
                      <Body>
                          <Text style={styles.listText}>Tueday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ wed: !this.state.wed })}>
-                     <CheckBox checked={this.state.wed}/>
+                     <CheckBox checked={this.state.wed} onPress={() => this.setState({ wed: !this.state.wed })}/>
                      <Body>
                          <Text style={styles.listText}>Wednesday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ thu: !this.state.thu })}>
-                     <CheckBox checked={this.state.thu}/>
+                     <CheckBox checked={this.state.thu} onPress={() => this.setState({ thu: !this.state.thu })}/>
                      <Body>
                          <Text style={styles.listText}>Thursday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ fri: !this.state.fri })}>
-                     <CheckBox checked={this.state.fri}/>
+                     <CheckBox checked={this.state.fri} onPress={() => this.setState({ fri: !this.state.fri })}/>
                      <Body>
                          <Text style={styles.listText}>Friday</Text>
                      </Body>
                  </ListItem>
                  <ListItem onPress={() => this.setState({ sat: !this.state.sat })}>
-                     <CheckBox checked={this.state.sat}/>
+                     <CheckBox checked={this.state.sat} onPress={() => this.setState({ sat: !this.state.sat })}/>
                      <Body>
                          <Text style={styles.listText}>Saturday</Text>
                      </Body>
