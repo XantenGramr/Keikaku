@@ -1,48 +1,59 @@
 const SqlQueries = {
     createCopy: function () {
         var queries = [];
-        queries.push("DROP TABLE IF EXISTS copyOfTable;");
-        queries.push("CREATE TABLE IF NOT EXISTS copyOfTable (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
-        queries.push("INSERT INTO copyOfTable(front, back) SELECT front, back FROM KanjiCards;");
-        queries.push("DROP TABLE IF EXISTS Weekness;");
-        queries.push("CREATE TABLE IF NOT EXISTS Weekness (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0);");
+        queries.push("DROP TABLE IF EXISTS copyOfKanjiCards;");
+        queries.push("CREATE TABLE IF NOT EXISTS copyOfKanjiCards (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
+        queries.push("INSERT INTO copyOfKanjiCards(front, back) SELECT front, back FROM KanjiCards;");
+
+        queries.push("DROP TABLE IF EXISTS copyOfVerbCards;");
+        queries.push("CREATE TABLE IF NOT EXISTS copyOfVerbCards (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
+        queries.push("INSERT INTO copyOfVerbCards(front, back) SELECT front, back FROM VerbCards;");
+
+        queries.push("DROP TABLE IF EXISTS copyOfVerbCards;");
+        queries.push("CREATE TABLE IF NOT EXISTS copyOfVerbCards (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
+        queries.push("INSERT INTO copyOfVerbCards(front, back) SELECT front, back FROM VocabCards;");
+
+        queries.push("DROP TABLE IF EXISTS ScheduledTable;");
+        queries.push("CREATE TABLE IF NOT EXISTS ScheduledTable (id INTEGER PRIMARY KEY, origin_id INTEGER, front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0, day VARCHAR(255), topic VARCHAR(255));");
         return queries;
     },
-    getElementsOfCopy: function () {
-        var query = "SELECT * FROM copyOfTable;";
+    getElementsOfKanji: function () {
+        var query = "SELECT * FROM copyOfKanjiCards;";
         return query;
     },
-    generateScheduledTable: function(tableName, count) {
+    getElementsOfVerb: function () {
+        var query = "SELECT * FROM copyOfVerbCards;";
+        return query;
+    },
+    getElementsOfVocab: function () {
+        var query = "SELECT * FROM copyOfVocabCards;";
+        return query;
+    },
+    generateScheduledTable: function(day, count, topic) {
         var queries = [];
         var query = "";
-        query = "DROP TABLE IF EXISTS " + tableName;
-        queries.push(query);
-        
-        query = "CREATE TABLE IF NOT EXISTS ";
-        query = query + tableName + " ";
-        query = query + "(id INTEGER PRIMARY KEY, origin_id INTEGER , front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0);";
-        // query = query + ", FOREIGN KEY (origin_id) REFERENCES copyOfTable(id));";
-        queries.push(query);
 
-        query = "INSERT INTO "
-        query = query + tableName;
-        query = query + "(origin_id, front, back) SELECT id, front, back FROM copyOfTable ORDER BY RANDOM() LIMIT ";
+        query = "INSERT INTO ScheduledTable "
+        query = query + "(origin_id, front, back, day, topic) SELECT id, front, back, '";
+        query = query + day;
+        query = query + "', '" + topic + "' FROM copyOf" + topic + "Cards ORDER BY RANDOM() LIMIT ";
         query = query + count + ";";
         queries.push(query);
 
-        query = "DELETE FROM copyOfTable WHERE EXISTS (";
-        query = query + "SELECT * FROM " + tableName + " ";
-        query = query + "WHERE " + tableName + ".origin_id = copyOfTable.id);";
+        query = "DELETE FROM copyOf" + topic + "Cards WHERE EXISTS (";
+        query = query + "SELECT * FROM ScheduledTable ";
+        query = query + "WHERE ScheduledTable.origin_id = copyOf" + topic + "Cards.id AND ScheduledTable.day = '" + day + "' ";
+        query = query + "AND topic = '" + topic + "');";
         queries.push(query);
 
         return queries;
     },
-    getKanjiStates: function () {
-        var query = "SELECT * FROM KanjiStates;";
+    getStates: function () {
+        var query = "SELECT * FROM States;";
         return query;
     },
-    updateKanjiStates: function(tableName, status) {
-        var query = "UPDATE KanjiStates SET status = ";
+    updateStates: function(tableName, status) {
+        var query = "UPDATE States SET status = ";
         query = query + status + " ";
         query = query + "WHERE day = '" + tableName + "';";
         return query;
@@ -58,33 +69,34 @@ const SqlQueries = {
         query = query + status + ";";
         return query;
     },
-    getDailyCards: function (tableName) {
-        var query = "SELECT * FROM ";
-        query = query + tableName + " ORDER BY RANDOM();";
+    getDailyCards: function (day, topic) {
+        var query = "SELECT * FROM ScheduledTable ";
+        query = query + "WHERE day = '" + day + "' AND topic = '" + topic + "';";
         return query;
     },
-    getBatchOfCards: function (tableName) {
-        var query = "SELECT * FROM ";
-        query = query + tableName + " WHERE status = 0 ";
-        query = query + " LIMIT 20;";
+    getWeeknessCards: function () {
+        var query = "SELECT * FROM Weekness;";
         return query;
     },
-    updateCardState: function(tableName, key, status) {
-        var query = "UPDATE " + tableName + " SET status = " + status + " ";
-        query = query + "WHERE id = " + key + ";";
+    getBatchOfCards: function (day, topic) {
+        var query = "SELECT * FROM ScheduledTable ";
+        query = query + "WHERE day = '" + day + "' AND status = 0 AND topic = '" + topic + "' ORDER BY RANDOM() LIMIT 20;";
+        return query;
+    },
+    getWeeknessBatchOfCards: function () {
+        var query = "SELECT * FROM Weekness ORDER BY RANDOM() LIMIT 20;";
+        return query;
+    },
+    updateCardState: function(key, status, topic) {
+        var query = "UPDATE ScheduledTable SET status = " + status + " ";
+        query = query + "WHERE id = " + key + " AND topic = '" + topic + "';";
         return query;
     },
     prepareWeekness: function() {
         var queries = [];
-        queries.push("DELETE FROM Weekness WHERE status = 1");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Sunday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Sunday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Monday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Tuesday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Wednesday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Thursday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Friday WHERE status = 2;");
-        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Saturday WHERE status = 2;");
+        queries.push("DROP TABLE IF EXISTS Weekness;");
+        queries.push("CREATE TABLE IF NOT EXISTS Weekness (id INTEGER PRIMARY KEY, origin_id INTEGER, front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0);");
+        queries.push("INSERT INTO Weekness(origin_id, front, back) SELECT id, front, back FROM ScheduledTable WHERE status = 2;");
         return queries;
     },
 }

@@ -7,7 +7,7 @@ import Database from '../../database/Database';
 import styles from '../../components/Styles';
 import CustomHeader from '../../components/CustomHeader';
 
-let DATABASE_VERSION = 7;
+let DATABASE_VERSION = 8;
 
 export default class Home extends React.Component {
     constructor(props){
@@ -93,13 +93,25 @@ export default class Home extends React.Component {
                             </Button>
                         </Row>
                         <Row size={1}>
-                            <Button style={{flex:1}} large rounded block disabled vocabulary>
-                                <Text uppercase={false} style={styles.text}>Vocabulary</Text>
+                            <Button style={{flex:1}} large rounded block verb 
+                                    onPress={() => {
+                                        navigate('Weekly', {
+                                            topic: 'Verb',
+                                        });
+                                    }}
+                                    >
+                                <Text uppercase={false} style={styles.text}>Verbs</Text>
                             </Button>
                         </Row>
                         <Row size={1}>
-                            <Button style={{flex:1}} large rounded block disabled grammar onPress={() => navigate('Sandbox')}> 
-                                <Text uppercase={false} style={styles.text}>Grammar</Text>
+                            <Button style={{flex:1}} large rounded block verb 
+                                    onPress={() => {
+                                        navigate('Weekly', {
+                                            topic: 'Vocab',
+                                        });
+                                    }}
+                                    >
+                                <Text uppercase={false} style={styles.text}>Vocabularies</Text>
                             </Button>
                         </Row>
                         <Row size={1}>

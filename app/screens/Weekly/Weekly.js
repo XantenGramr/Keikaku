@@ -15,13 +15,13 @@ export default class Weekly extends React.Component {
             topic: props.navigation.state.params.topic,
             days: [],
             commands: [
-                () => this.goToCards(0),
-                () => this.goToCards(1),
-                () => this.goToCards(2),
-                () => this.goToCards(3),
-                () => this.goToCards(4),
-                () => this.goToCards(5),
-                () => this.goToCards(6)
+                () => this.goToCards(0, props.navigation.state.params.topic),
+                () => this.goToCards(1, props.navigation.state.params.topic),
+                () => this.goToCards(2, props.navigation.state.params.topic),
+                () => this.goToCards(3, props.navigation.state.params.topic),
+                () => this.goToCards(4, props.navigation.state.params.topic),
+                () => this.goToCards(5, props.navigation.state.params.topic),
+                () => this.goToCards(6, props.navigation.state.params.topic)
             ],
         }
         console.log(this.state.topic);
@@ -35,7 +35,7 @@ export default class Weekly extends React.Component {
 
     _init = async () => {
         await Database.openDatabase();
-        let results = await Database.getKanjiStates();
+        let results = await Database.getStates();
         var length = results.length;
         var days = [];
 
@@ -59,11 +59,12 @@ export default class Weekly extends React.Component {
         headerShown: false,
     };
 
-    goToCards = (name) => {
+    goToCards = (name, topic) => {
         console.log(name);
         const { navigate } = this.props.navigation;
         navigate('DeckDetails', {
             day: name,
+            topic: topic,
         })
     }
 

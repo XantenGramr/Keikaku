@@ -32,12 +32,12 @@ export default class Randomize extends React.Component {
     _init = async () => {
         await Database.openDatabase();
         
-        let kanjiStates = await Database.getKanjiStates();
-        var length = kanjiStates.length;
+        let states = await Database.getStates();
+        var length = states.length;
         
         for (var i = 0; i < length; ++i) {
-            var day = kanjiStates.item(i).day;
-            var status = kanjiStates.item(i).status ? true : false;
+            var day = states.item(i).day;
+            var status = states.item(i).status ? true : false;
 
             switch (day) {
                 case 'Sunday':
@@ -78,49 +78,49 @@ export default class Randomize extends React.Component {
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         day = "Monday";
         state = this.state.mon;
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         day = "Tuesday";
         state = this.state.tue;
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         day = "Wednesday";
         state = this.state.wed;
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         day = "Thursday";
         state = this.state.thu;
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         day = "Friday";
         state = this.state.fri;
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         day = "Saturday";
         state = this.state.sat;
         if (state) {
             days.push(day);
         }
-        await Database.updateKanjiState(day, state);
+        await Database.updateState(day, state);
 
         return days;
     }
@@ -132,18 +132,23 @@ export default class Randomize extends React.Component {
         var days = await this.getDayArray();
         var numberOfDays = days.length;
 
-        var quotient = Math.floor(totalItems / numberOfDays);
-        var modulo = totalItems % numberOfDays;
+        var topics = ['Kanji', 'Verb', 'Vocab'];
+        for( var i = 0; i < totalItems.length; ++i) {
+            console.log(totalItems[i]);
+            var totalItem = totalItems[i];
+            var quotient = Math.floor(totalItem / numberOfDays);
+            var modulo = totalItem % numberOfDays;
 
-        for( var i = 0; i < numberOfDays; ++i) {
-            let limit = 0;
-            if (modulo > 0) {
-                limit = quotient + 1;
-                --modulo;
-            } else {
-                limit = quotient;
+            for( var j = 0; j < numberOfDays; ++j) {
+                let limit = 0;
+                if (modulo > 0) {
+                    limit = quotient + 1;
+                    --modulo;
+                } else {
+                    limit = quotient;
+                }
+                await Database.generateScheduledTable(days[j], limit, topics[i]);
             }
-            await Database.generateScheduledTable(days[i], limit);
         }
     }
 

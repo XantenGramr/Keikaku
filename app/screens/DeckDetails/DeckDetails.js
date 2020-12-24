@@ -13,10 +13,12 @@ export default class DeckDetails extends React.Component {
     constructor(props){
         super(props);
         var index = props.navigation.state.params.day;
-        console.log("index received: " + index);
+        var topic = props.navigation.state.params.topic;
+        console.log("topic received: " + topic);
         this.state = {
             isReady: false,
             index: index,
+            topic: topic,
             day: days[index],
             totalCards: 0,
             statistics: "",
@@ -53,7 +55,7 @@ export default class DeckDetails extends React.Component {
             await Database.prepareWeekness();
         }
         
-        let results = await Database.getDailyCards(this.state.day);
+        let results = await Database.getDailyCards(this.state.day, this.state.topic);
         var totalItems = results.length;
         console.log(totalItems);
         this.setState({totalCards: totalItems});
@@ -93,23 +95,27 @@ export default class DeckDetails extends React.Component {
 
     startReview = () => {
         var day = this.state.day;
+        var topic = this.state.topic;
         console.log(day);
         
         const { navigate } = this.props.navigation;
 
         navigate('Review', {
             day: day,
+            topic: topic,
         });
     }
 
     checkCards = () => {
         var day = this.state.day;
+        var topic = this.state.topic;
         console.log(day);
         
         const { navigate } = this.props.navigation;
 
         navigate('CardList', {
             day: day,
+            topic: topic,
         });
     }
 

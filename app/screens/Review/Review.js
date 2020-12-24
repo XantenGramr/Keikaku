@@ -16,9 +16,11 @@ export default class Review extends React.Component {
     constructor(props){
         super(props);
         var day = props.navigation.state.params.day;
+        var topic = props.navigation.state.params.topic;
         this.state = {
             isReady: false,
             day: day,
+            topic: topic,
             back: "-",
             isWrong: false,
             isCorrect: false,
@@ -34,7 +36,7 @@ export default class Review extends React.Component {
 
     _init = async () => {
         await Database.openDatabase();
-        let results = await Database.getBatchOfCards(this.state.day);
+        let results = await Database.getBatchOfCards(this.state.day, this.state.topic);
         var totalItems = results.length;
         console.log(totalItems);
         var deck = [];
@@ -45,6 +47,7 @@ export default class Review extends React.Component {
             var card = {
                 id: i,
                 primaryKey: results.item(i).id,
+                originKey: results.item(i).origin_id,
                 front: results.item(i).front,
                 back: back,
                 temp: "",
@@ -67,8 +70,8 @@ export default class Review extends React.Component {
         }
     }
 
-    saveCorrect = (id, key) => {
-        Database.updateCardState(this.state.day, key, 1);
+    saveCorrect = (id, key, origin) => {
+        Database.updateCardState(this.state.day, key, 1, origin, this.state.topic);
         this.cards[id].isWrong = false;
         this.cards[id].isCorrect = true;
         this.setState({
@@ -77,8 +80,8 @@ export default class Review extends React.Component {
         });
     }
 
-    saveWrong = (id, key) => {
-        Database.updateCardState(this.state.day, key, 2);
+    saveWrong = (id, key, origin) => {
+        Database.updateCardState(this.state.day, key, 2, origin, this.state.topic);
         this.cards[id].isWrong = true;
         this.cards[id].isCorrect = false;
         this.setState({
@@ -150,7 +153,7 @@ export default class Review extends React.Component {
                                     bordered={element.isWrong || this.state.isWrong}
                                     transparent={element.isWrong  || this.state.isWrong} 
                                     disabled={element.isWrong || this.state.isWrong} large rounded block start
-                                    onPress={() => this.saveWrong(element.id, element.primaryKey)}>
+                                    onPress={() => this.saveWrong(element.id, element.primaryKey, element.originKey)}>
                                     <Text style={styles.text}>Incorrect</Text>
                                 </Button>
                            </Col>
@@ -159,7 +162,7 @@ export default class Review extends React.Component {
                                     bordered={element.isCorrect || this.state.isCorrect}
                                     transparent={element.isCorrect || this.state.isCorrect} 
                                     disabled={element.isCorrect || this.state.isCorrect} large rounded block start
-                                    onPress={() => this.saveCorrect(element.id, element.primaryKey)}>
+                                    onPress={() => this.saveCorrect(element.id, element.primaryKey, element.originKey)}>
                                     <Text style={styles.text}>Correct</Text>
                                 </Button>
                            </Col>

@@ -67,21 +67,21 @@ class Database  {
         return results.rows.item(0).id;
     }
 
-    getKanjiStates = async () => {
-        var getKanjiStatesQuery = SqlQueries.getKanjiStates();
-        let results = await this.executeSql(getKanjiStatesQuery, []);
+    getStates = async () => {
+        var getStatesQuery = SqlQueries.getStates();
+        let results = await this.executeSql(getStatesQuery, []);
         return results.rows;
     }
 
-    updateKanjiState = async (day, status) => {
+    updateState = async (day, status) => {
         var statusInInteger = status ? 1 : 0;
-        var sqlQuery = SqlQueries.updateKanjiStates(day, statusInInteger);
+        var sqlQuery = SqlQueries.updateStates(day, statusInInteger);
         await this.executeSql(sqlQuery, []);
         return;
     }
 
-    generateScheduledTable = async (tableName, count) => {
-        var scheduledTableQueries = SqlQueries.generateScheduledTable(tableName, count);
+    generateScheduledTable = async (day, count, topic) => {
+        var scheduledTableQueries = SqlQueries.generateScheduledTable(day, count, topic);
         for (var i = 0; i < scheduledTableQueries.length; ++i)  {
           var query = scheduledTableQueries[i];
           await this.executeSql(query, []);
@@ -95,27 +95,55 @@ class Database  {
             await this.executeSql(sqlQuery, []);
         }
 
-        var getElementsOfCopyQuery = SqlQueries.getElementsOfCopy();
-        let results = await this.executeSql(getElementsOfCopyQuery, []);
+        var counts = [];
+        var getElementsOfKanjiQuery = SqlQueries.getElementsOfKanji();
+        let kanjiResults = await this.executeSql(getElementsOfKanjiQuery, []);
+        counts.push(kanjiResults.rows.length);
 
-        return results.rows.length;
+        var getElementsOfVerbQuery = SqlQueries.getElementsOfVerb();
+        let verbResults = await this.executeSql(getElementsOfVerbQuery, []);
+        counts.push(verbResults.rows.length);
+
+        var getElementsOfVocabQuery = SqlQueries.getElementsOfVocab();
+        let vocabResults = await this.executeSql(getElementsOfVocabQuery, []);
+        counts.push(vocabResults.rows.length);
+
+        return counts;
     }
 
-    getDailyCards = async (day) => {
-        console.log("============== " + day);
-        var getDailyCardsQuery = SqlQueries.getDailyCards(day);
+    getDailyCards = async (day, topic) => {
+        if (day === 'Weekness') {
+            console.log("***************** " + day);    
+            var getWeeknessCardsQuery = SqlQueries.getWeeknessCards();
+            let results = await this.executeSql(getWeeknessCardsQuery, []);
+            return results.rows;
+        } 
+        console.log("============== " + topic);
+        var getDailyCardsQuery = SqlQueries.getDailyCards(day, topic);
         let results = await this.executeSql(getDailyCardsQuery, []);
         return results.rows;
     }
 
-    getBatchOfCards = async (day) => {
-        var getDailyCardsQuery = SqlQueries.getBatchOfCards(day);
+    getBatchOfCards = async (day, topic) => {
+        if (day === 'Weekness') {
+            var getWeeknessBatchOfCardsQuery = SqlQueries.getWeeknessBatchOfCards();
+            let results = await this.executeSql(getWeeknessBatchOfCardsQuery, []);
+            return results.rows;
+        } 
+        var getDailyCardsQuery = SqlQueries.getBatchOfCards(day, topic);
         let results = await this.executeSql(getDailyCardsQuery, []);
+
         return results.rows;
     }
 
-    updateCardState = async (day, key, status) => {
-        var sqlQuery = SqlQueries.updateCardState(day, key, status);
+    updateCardState = async (day, key, status, origin, topic) => {
+        if (day === 'Weekness') {
+            var sqlQuery = SqlQueries.updateCardState(origin, status, topic);
+            await this.executeSql(sqlQuery, []);
+            return;
+        }
+
+        var sqlQuery = SqlQueries.updateCardState(key, status, topic);
         await this.executeSql(sqlQuery, []);
         return;
     }

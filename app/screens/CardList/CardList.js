@@ -16,9 +16,11 @@ export default class CardList extends React.Component {
     constructor(props){
         super(props);
         var day = props.navigation.state.params.day;
+        var topic = props.navigation.state.params.topic;
         this.state = {
             isReady: false,
             day: day,
+            topic: topic,
             front: "-",
             isWrong: false,
             isCorrect: false,
@@ -34,7 +36,7 @@ export default class CardList extends React.Component {
 
     _init = async () => {
         await Database.openDatabase();
-        let results = await Database.getDailyCards(this.state.day);
+        let results = await Database.getDailyCards(this.state.day, this.state.topic);
         var totalItems = results.length;
         console.log(totalItems);
         var deck = [];
