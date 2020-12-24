@@ -7,14 +7,16 @@ import Database from '../../database/Database';
 import CustomHeader from '../../components/CustomHeader';
 import styles from '../../components/Styles';
 
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Weekness"];
 
 export default class DeckDetails extends React.Component {
     constructor(props){
         super(props);
         var index = props.navigation.state.params.day;
+        console.log("index received: " + index);
         this.state = {
             isReady: false,
+            index: index,
             day: days[index],
             totalCards: 0,
             statistics: "",
@@ -46,6 +48,11 @@ export default class DeckDetails extends React.Component {
 
     _init = async () => {
         await Database.openDatabase();
+        console.log("*****************************: " + this.state.index);
+        if (this.state.index === 7) {
+            await Database.prepareWeekness();
+        }
+        
         let results = await Database.getDailyCards(this.state.day);
         var totalItems = results.length;
         console.log(totalItems);

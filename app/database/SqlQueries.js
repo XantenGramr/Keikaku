@@ -2,8 +2,10 @@ const SqlQueries = {
     createCopy: function () {
         var queries = [];
         queries.push("DROP TABLE IF EXISTS copyOfTable;");
-        queries.push("CREATE TABLE IF NOT EXISTS copyOfTable (id INTEGER PRIMARY KEY, english VARCHAR(255), kanji VARCHAR(255), hiragana VARCHAR(255));");
-        queries.push("INSERT INTO copyOfTable(english, kanji, hiragana) SELECT English, Kanji, Hiragana FROM Characters;");
+        queries.push("CREATE TABLE IF NOT EXISTS copyOfTable (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
+        queries.push("INSERT INTO copyOfTable(front, back) SELECT front, back FROM KanjiCards;");
+        queries.push("DROP TABLE IF EXISTS Weekness;");
+        queries.push("CREATE TABLE IF NOT EXISTS Weekness (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0);");
         return queries;
     },
     getElementsOfCopy: function () {
@@ -18,13 +20,13 @@ const SqlQueries = {
         
         query = "CREATE TABLE IF NOT EXISTS ";
         query = query + tableName + " ";
-        query = query + "(id INTEGER PRIMARY KEY, origin_id INTEGER , english VARCHAR(255), kanji VARCHAR(255), hiragana VARCHAR(255), status INTEGER DEFAULT 0";
-        query = query + ", FOREIGN KEY (origin_id) REFERENCES copyOfTable(id));";
+        query = query + "(id INTEGER PRIMARY KEY, origin_id INTEGER , front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0);";
+        // query = query + ", FOREIGN KEY (origin_id) REFERENCES copyOfTable(id));";
         queries.push(query);
 
         query = "INSERT INTO "
         query = query + tableName;
-        query = query + "(origin_id, english, kanji, hiragana) SELECT id, english, kanji, hiragana FROM copyOfTable ORDER BY RANDOM() LIMIT ";
+        query = query + "(origin_id, front, back) SELECT id, front, back FROM copyOfTable ORDER BY RANDOM() LIMIT ";
         query = query + count + ";";
         queries.push(query);
 
@@ -58,7 +60,7 @@ const SqlQueries = {
     },
     getDailyCards: function (tableName) {
         var query = "SELECT * FROM ";
-        query = query + tableName + ";";
+        query = query + tableName + " ORDER BY RANDOM();";
         return query;
     },
     getBatchOfCards: function (tableName) {
@@ -71,6 +73,19 @@ const SqlQueries = {
         var query = "UPDATE " + tableName + " SET status = " + status + " ";
         query = query + "WHERE id = " + key + ";";
         return query;
+    },
+    prepareWeekness: function() {
+        var queries = [];
+        queries.push("DELETE FROM Weekness WHERE status = 1");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Sunday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Sunday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Monday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Tuesday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Wednesday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Thursday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Friday WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(front, back) SELECT front, back FROM Saturday WHERE status = 2;");
+        return queries;
     },
 }
 

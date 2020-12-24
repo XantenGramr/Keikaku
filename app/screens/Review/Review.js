@@ -9,7 +9,7 @@ import FlipCard from 'react-native-flip-card'
 import CustomHeader from '../../components/CustomHeader';
 import styles from '../../components/Styles';
 
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Weekness"];
 
 export default class Review extends React.Component {
     cards = [];
@@ -19,7 +19,7 @@ export default class Review extends React.Component {
         this.state = {
             isReady: false,
             day: day,
-            answer: "-",
+            back: "-",
             isWrong: false,
             isCorrect: false,
         }
@@ -40,12 +40,13 @@ export default class Review extends React.Component {
         var deck = [];
         var actions = [];
         for (var i = 0; i < totalItems; ++i) {
-            var answer = results.item(i).hiragana + " - " + results.item(i).english;
+            // var answer = results.item(i).hiragana + " - " + results.item(i).english;
+            var back = results.item(i).back;
             var card = {
                 id: i,
                 primaryKey: results.item(i).id,
-                kanji: results.item(i).kanji,
-                answer: answer,
+                front: results.item(i).front,
+                back: back,
                 temp: "",
                 isCorrect: false,
                 isWrong: false,
@@ -59,10 +60,10 @@ export default class Review extends React.Component {
     }
 
     showAnswer = (id) => {
-        if (this.state.answer === "-") {
-            this.setState({answer: id});
+        if (this.state.back === "-") {
+            this.setState({back: id});
         } else {
-            this.setState({answer: "-"});
+            this.setState({back: "-"});
         }
     }
 
@@ -88,7 +89,7 @@ export default class Review extends React.Component {
 
     resetState = () => {
         this.setState({
-            answer: "-",
+            back: "-",
             isWrong: false,
             isCorrect: false,
         })
@@ -131,12 +132,12 @@ export default class Review extends React.Component {
                                     >
                                     {/* Face Side */}
                                     <View style={styles.face}>
-                                        <Text style={{ fontFamily: 'PineappleParty', fontSize: 65 }}>{element.kanji}</Text>
+                                        <Text style={{ fontFamily: 'PineappleParty', fontSize: 65 }}>{element.front}</Text>
                                         
                                     </View>
                                     {/* Back Side */}
                                     <View style={styles.back}>
-                                    <Text style={{ fontFamily: 'PineappleParty', fontSize: 30 }}>{element.answer}</Text>
+                                    <Text style={{ fontFamily: 'PineappleParty', fontSize: 30 }}>{element.back}</Text>
                                     </View>
                                 </FlipCard>
                             </Col>

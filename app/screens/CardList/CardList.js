@@ -19,7 +19,7 @@ export default class CardList extends React.Component {
         this.state = {
             isReady: false,
             day: day,
-            answer: "-",
+            front: "-",
             isWrong: false,
             isCorrect: false,
         }
@@ -39,11 +39,12 @@ export default class CardList extends React.Component {
         console.log(totalItems);
         var deck = [];
         for (var i = 0; i < totalItems; ++i) {
-            var answer = results.item(i).hiragana + " - " + results.item(i).english;
+            // var answer = results.item(i).hiragana + " - " + results.item(i).english;
+            var front = results.item(i).back;
             var card = {
                 id: i,
-                kanji: results.item(i).kanji,
-                answer: answer,
+                front: results.item(i).front,
+                back: front,
             }
             deck.push(card)
         }
@@ -65,8 +66,8 @@ export default class CardList extends React.Component {
             return (
                 <ListItem avatar key={element.id}>
                     <Body>
-                        <Text style={styles.cardListText}>{element.kanji}</Text>
-                        <Text style={styles.cardListText}>{element.answer}</Text>
+                        <Text style={styles.cardListText}>{element.front}</Text>
+                        <Text style={styles.cardListText}>{element.back}</Text>
                     </Body>
                 </ListItem>
             );

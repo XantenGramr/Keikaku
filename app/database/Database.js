@@ -120,6 +120,14 @@ class Database  {
         return;
     }
 
+    prepareWeekness = async () => {
+        var sqlQueries = SqlQueries.prepareWeekness();
+        for (var i = 0; i < sqlQueries.length; ++i)  {
+          var query = sqlQueries[i];
+          await this.executeSql(query, []);
+        }
+    }
+
     getConnection() {
         return conn;
     }

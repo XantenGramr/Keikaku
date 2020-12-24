@@ -102,7 +102,7 @@ export default class Weekly extends React.Component {
                     <Row size={1}></Row>
                     {renderedButtons}
                     <Row size={1}>
-                        <Button style={{flex:1}} large rounded block disabled sunday>
+                        <Button style={{flex:1}} large rounded block sunday onPress={() => this.goToCards(7)}>
                             <Text uppercase={false} style={styles.text}>WEEKness</Text>
                         </Button>
                     </Row>
