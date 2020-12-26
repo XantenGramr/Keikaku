@@ -8,6 +8,9 @@ import Weekly from './app/screens/Weekly/Weekly';
 import DeckDetails from './app/screens/DeckDetails/DeckDetails';
 import Review from './app/screens/Review/Review';
 import CardList from './app/screens/CardList/CardList';
+import WeeknessDetails from './app/screens/WeeknessDetails/WeeknessDetails';
+import WeeknessCardList from './app/screens/WeeknessCardList/WeeknessCardList';
+import WeeknessReview from './app/screens/WeeknessReview/WeeknessReview';
 import Sandbox from './app/screens/Sandbox/Sandbox';
 
 import React from 'react';
@@ -20,6 +23,9 @@ const Navigator = createStackNavigator({
     DeckDetails: { screen: DeckDetails },
     Review: { screen: Review },
     CardList: {screen: CardList},
+    WeeknessCardList: {screen: WeeknessCardList},
+    WeeknessDetails: {screen: WeeknessDetails},
+    WeeknessReview: {screen: WeeknessReview},
     Sandbox: { screen: Sandbox },
 });
 

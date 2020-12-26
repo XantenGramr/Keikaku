@@ -24,7 +24,6 @@ export default class Weekly extends React.Component {
                 () => this.goToCards(6, props.navigation.state.params.topic)
             ],
         }
-        console.log(this.state.topic);
     }
 
     componentDidMount() {
@@ -60,11 +59,18 @@ export default class Weekly extends React.Component {
     };
 
     goToCards = (name, topic) => {
-        console.log(name);
         const { navigate } = this.props.navigation;
         navigate('DeckDetails', {
             day: name,
             topic: topic,
+        })
+    }
+
+    goToWeekness = () => {
+        const { navigate } = this.props.navigation;
+        navigate('WeeknessDetails', {
+            day: "Weekness",
+            topic: this.state.topic,
         })
     }
 
@@ -103,7 +109,7 @@ export default class Weekly extends React.Component {
                     <Row size={1}></Row>
                     {renderedButtons}
                     <Row size={1}>
-                        <Button style={{flex:1}} large rounded block sunday onPress={() => this.goToCards(7)}>
+                        <Button style={{flex:1}} large rounded block sunday onPress={() => this.goToWeekness()}>
                             <Text uppercase={false} style={styles.text}>WEEKness</Text>
                         </Button>
                     </Row>

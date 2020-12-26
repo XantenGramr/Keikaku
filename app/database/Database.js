@@ -11,7 +11,7 @@ let conn;
 
 class Database  {
 	constructor(){
-		console.log("TEST Construct");
+		console.log("Database.js Constructor");
 	}
 
     executeSql = async (sql, params = []) => {
@@ -113,12 +113,10 @@ class Database  {
 
     getDailyCards = async (day, topic) => {
         if (day === 'Weekness') {
-            console.log("***************** " + day);    
             var getWeeknessCardsQuery = SqlQueries.getWeeknessCards();
             let results = await this.executeSql(getWeeknessCardsQuery, []);
             return results.rows;
         } 
-        console.log("============== " + topic);
         var getDailyCardsQuery = SqlQueries.getDailyCards(day, topic);
         let results = await this.executeSql(getDailyCardsQuery, []);
         return results.rows;

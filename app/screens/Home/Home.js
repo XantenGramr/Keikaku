@@ -7,7 +7,7 @@ import Database from '../../database/Database';
 import styles from '../../components/Styles';
 import CustomHeader from '../../components/CustomHeader';
 
-let DATABASE_VERSION = 8;
+let DATABASE_VERSION = 9;
 
 export default class Home extends React.Component {
     constructor(props){
@@ -44,18 +44,16 @@ export default class Home extends React.Component {
     };
 
     _init = async () => {
-        console.log("Start2");
         await Database.openDatabase();
         
         let installedVersion = await Database.getVersion();
-        console.log(installedVersion);
 
         if (installedVersion != DATABASE_VERSION) {
-            console.log("Need to update DB");
+            console.log("WILL UPDATE THE DB!");
 
             await Database.updateDatabase(DATABASE_VERSION);
         } else {
-            console.log("NO NEED TO UPDATE");
+            console.log("NO NEED TO UPDATE!");
         }
         this.setState({isReady: true});
     }

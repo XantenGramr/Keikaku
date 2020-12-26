@@ -11,7 +11,7 @@ import styles from '../../components/Styles';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-export default class CardList extends React.Component {
+export default class WeeknessCardList extends React.Component {
     cards = [];
     constructor(props){
         super(props);
@@ -53,11 +53,11 @@ export default class CardList extends React.Component {
     }
 
     static navigationOptions = {
-        title: 'CardList',
+        title: 'WeeknessCardList',
         headerShown: false,
     };
 
-    renderCardList() {
+    renderWeeknessCardList() {
         const { navigate } = this.props.navigation;
 
         const cards = this.cards;
@@ -78,7 +78,7 @@ export default class CardList extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Card List"
-                    backButtonTo="DeckDetails"/>
+                    backButtonTo="WeeknessDetails"/>
             <ScrollView>
                 <List>
                     {renderedCards}
@@ -92,7 +92,7 @@ export default class CardList extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
 
-        return this.state.isReady ? this.renderCardList() : (
+        return this.state.isReady ? this.renderWeeknessCardList() : (
             <LinearGradient
             colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
             style={styles.linearGradient}

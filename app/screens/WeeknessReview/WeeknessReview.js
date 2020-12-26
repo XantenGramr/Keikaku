@@ -11,7 +11,7 @@ import styles from '../../components/Styles';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Weekness"];
 
-export default class Review extends React.Component {
+export default class WeeknessReview extends React.Component {
     cards = [];
     constructor(props){
         super(props);
@@ -28,7 +28,7 @@ export default class Review extends React.Component {
     }
 
     componentDidMount() {
-        console.log("DeckDetails Screen Init");
+        console.log("Weekness Review Screen Init");
         this._init();
         return true;
     }
@@ -101,7 +101,7 @@ export default class Review extends React.Component {
     }
 
     static navigationOptions = {
-        title: 'Review',
+        title: 'WeeknessReview',
         headerShown: false,
     };
 
@@ -175,7 +175,7 @@ export default class Review extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Flashcards Review"
-                    backButtonTo="DeckDetails"/>
+                    backButtonTo="WeeknessDetails"/>
             <LinearGradient
                         colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                         style={styles.linearGradient}

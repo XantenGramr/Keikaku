@@ -9,16 +9,15 @@ import styles from '../../components/Styles';
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Weekness"];
 
-export default class DeckDetails extends React.Component {
+export default class WeeknessDetails extends React.Component {
     constructor(props){
         super(props);
-        var index = props.navigation.state.params.day;
+        var day = props.navigation.state.params.day;
         var topic = props.navigation.state.params.topic;
         this.state = {
             isReady: false,
-            index: index,
             topic: topic,
-            day: days[index],
+            day: day,
             totalCards: 0,
             statistics: "",
             score: "",
@@ -30,7 +29,7 @@ export default class DeckDetails extends React.Component {
     navigationSubcription;
 
     componentDidMount() {
-        console.log("DeckDetails Screen Init");
+        console.log("WeeknessDetails Screen Init");
         this.navigationSubscription = this.props.navigation.addListener('didFocus', this.onFocus);
 
         this._init();
@@ -48,9 +47,7 @@ export default class DeckDetails extends React.Component {
 
     _init = async () => {
         await Database.openDatabase();
-        if (this.state.index === 7) {
-            await Database.prepareWeekness();
-        }
+        await Database.prepareWeekness();
         
         let results = await Database.getDailyCards(this.state.day, this.state.topic);
         var totalItems = results.length;
@@ -93,7 +90,7 @@ export default class DeckDetails extends React.Component {
         
         const { navigate } = this.props.navigation;
 
-        navigate('Review', {
+        navigate('WeeknessReview', {
             day: day,
             topic: topic,
         });
@@ -105,19 +102,19 @@ export default class DeckDetails extends React.Component {
         
         const { navigate } = this.props.navigation;
 
-        navigate('CardList', {
+        navigate('WeeknessCardList', {
             day: day,
             topic: topic,
         });
     }
 
     static navigationOptions = {
-        title: 'DeckDetails',
+        title: 'WeeknessDetails',
         headerShown: false,
     };
     
 
-    renderDeckDetails() {
+    renderWeeknessDetails() {
         const { navigate } = this.props.navigation;
         const { route } = this.props;
 
@@ -144,10 +141,6 @@ export default class DeckDetails extends React.Component {
                         </Col>
                     </Row>
                     <Row size={1}>
-                        <Col size={1}></Col>
-                        <Col size={8}>
-                            <Text style={styles.text}>{this.state.score}</Text>
-                        </Col>
                     </Row>
                     <Row size={1}>
                         <Col size={1}></Col>
@@ -156,10 +149,6 @@ export default class DeckDetails extends React.Component {
                         </Col>
                     </Row>
                     <Row size={1}>
-                        <Col size={1}></Col>
-                        <Col size={8}>
-                            <Text style={styles.text}>{this.state.done}</Text>
-                        </Col>
                     </Row>
                     <Row size={1}>
                         <Button style={{flex:1}} large rounded block start onPress={this.checkCards}>
@@ -182,7 +171,7 @@ export default class DeckDetails extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
 
-        return this.state.isReady ? this.renderDeckDetails() : (
+        return this.state.isReady ? this.renderWeeknessDetails() : (
             <LinearGradient
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}

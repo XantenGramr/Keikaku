@@ -127,14 +127,12 @@ export default class Randomize extends React.Component {
 
     _randomize = async () => {
         let totalItems = await Database.generateCopyTableAndCountItems();
-        console.log(totalItems);
       
         var days = await this.getDayArray();
         var numberOfDays = days.length;
 
         var topics = ['Kanji', 'Verb', 'Vocab'];
         for( var i = 0; i < totalItems.length; ++i) {
-            console.log(totalItems[i]);
             var totalItem = totalItems[i];
             var quotient = Math.floor(totalItem / numberOfDays);
             var modulo = totalItem % numberOfDays;
