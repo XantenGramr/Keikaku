@@ -9,9 +9,9 @@ const SqlQueries = {
         queries.push("CREATE TABLE IF NOT EXISTS copyOfVerbCards (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
         queries.push("INSERT INTO copyOfVerbCards(front, back) SELECT front, back FROM VerbCards;");
 
-        queries.push("DROP TABLE IF EXISTS copyOfVerbCards;");
-        queries.push("CREATE TABLE IF NOT EXISTS copyOfVerbCards (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
-        queries.push("INSERT INTO copyOfVerbCards(front, back) SELECT front, back FROM VocabCards;");
+        queries.push("DROP TABLE IF EXISTS copyOfVocabCards;");
+        queries.push("CREATE TABLE IF NOT EXISTS copyOfVocabCards (id INTEGER PRIMARY KEY, front VARCHAR(255), back VARCHAR(255));");
+        queries.push("INSERT INTO copyOfVocabCards(front, back) SELECT front, back FROM VocabCards;");
 
         queries.push("DROP TABLE IF EXISTS ScheduledTable;");
         queries.push("CREATE TABLE IF NOT EXISTS ScheduledTable (id INTEGER PRIMARY KEY, origin_id INTEGER, front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0, day VARCHAR(255), topic VARCHAR(255));");

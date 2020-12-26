@@ -7,7 +7,7 @@ import Database from '../../database/Database';
 import styles from '../../components/Styles';
 import CustomHeader from '../../components/CustomHeader';
 
-let DATABASE_VERSION = 9;
+let DATABASE_VERSION = 10;
 
 export default class Home extends React.Component {
     constructor(props){
