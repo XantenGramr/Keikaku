@@ -67,6 +67,7 @@ export default class Weekly extends React.Component {
     }
 
     goToWeekness = () => {
+        console.log("GO TO WEEKNESS : " + this.state.topic);
         const { navigate } = this.props.navigation;
         navigate('WeeknessDetails', {
             day: "Weekness",

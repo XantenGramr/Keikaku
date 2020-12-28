@@ -68,7 +68,7 @@ export default class WeeknessReview extends React.Component {
     }
 
     saveCorrect = (id, key, origin) => {
-        Database.updateCardState(this.state.day, key, 1, origin, this.state.topic);
+        Database.updateCardState(this.state.day, key, 3, origin, this.state.topic);
         this.cards[id].isWrong = false;
         this.cards[id].isCorrect = true;
         this.setState({

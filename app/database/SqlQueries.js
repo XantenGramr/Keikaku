@@ -84,19 +84,38 @@ const SqlQueries = {
         return query;
     },
     getWeeknessBatchOfCards: function () {
-        var query = "SELECT * FROM Weekness ORDER BY RANDOM() LIMIT 20;";
+        var query = "SELECT * FROM Weekness WHERE status = 2 ORDER BY RANDOM() LIMIT 20;";
         return query;
     },
+    updateWeeknessCard: function(key, status, topic) {
+        var queries = [];
+        var query = "UPDATE ScheduledTable SET status = " + status + " ";
+        query = query + "WHERE id = " + key + " AND topic = '" + topic + "';";
+        queries.push(query);
+
+        query = "UPDATE Weekness SET status = " + status + " ";
+        query = query + "WHERE origin_id = " + key + ";";
+        queries.push(query);
+        return queries;
+    },
+
     updateCardState: function(key, status, topic) {
         var query = "UPDATE ScheduledTable SET status = " + status + " ";
         query = query + "WHERE id = " + key + " AND topic = '" + topic + "';";
         return query;
     },
-    prepareWeekness: function() {
+    prepareWeekness: function(topic) {
         var queries = [];
         queries.push("DROP TABLE IF EXISTS Weekness;");
         queries.push("CREATE TABLE IF NOT EXISTS Weekness (id INTEGER PRIMARY KEY, origin_id INTEGER, front VARCHAR(255), back VARCHAR(255), status INTEGER DEFAULT 0);");
-        queries.push("INSERT INTO Weekness(origin_id, front, back) SELECT id, front, back FROM ScheduledTable WHERE status = 2;");
+        queries.push("INSERT INTO Weekness(origin_id, front, back, status) SELECT id, front, back, status FROM ScheduledTable WHERE (status = 2 OR status = 3) AND topic = '" + topic + "';");
+        return queries;
+    },
+    resetWeekness: function(topic) {
+        var queries = [];
+        var query = "";
+        query = query + "UPDATE ScheduledTable SET status = 2 WHERE status = 3 AND topic = '" + topic + "';";
+        queries.push(query);
         return queries;
     },
 }

@@ -136,8 +136,11 @@ class Database  {
 
     updateCardState = async (day, key, status, origin, topic) => {
         if (day === 'Weekness') {
-            var sqlQuery = SqlQueries.updateCardState(origin, status, topic);
-            await this.executeSql(sqlQuery, []);
+            var sqlQueries = SqlQueries.updateWeeknessCard(origin, status, topic);
+            for (var i = 0; i < sqlQueries.length; ++i)  {
+                var query = sqlQueries[i];
+                await this.executeSql(query, []);
+              }
             return;
         }
 
@@ -146,8 +149,16 @@ class Database  {
         return;
     }
 
-    prepareWeekness = async () => {
-        var sqlQueries = SqlQueries.prepareWeekness();
+    prepareWeekness = async (topic) => {
+        var sqlQueries = SqlQueries.prepareWeekness(topic);
+        for (var i = 0; i < sqlQueries.length; ++i)  {
+          var query = sqlQueries[i];
+          await this.executeSql(query, []);
+        }
+    }
+
+    resetWeekness = async (topic) => {
+        var sqlQueries = SqlQueries.resetWeekness(topic);
         for (var i = 0; i < sqlQueries.length; ++i)  {
           var query = sqlQueries[i];
           await this.executeSql(query, []);
