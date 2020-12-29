@@ -181,7 +181,8 @@ export default class Randomize extends React.Component {
                 <CustomHeader
                     navigation={this.props.navigation}
                     title="Schedule"
-                    backButtonTo="Home"/>
+                    backButtonTo="Home"
+                    currentPage="Randomize"/>
           <LinearGradient
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}

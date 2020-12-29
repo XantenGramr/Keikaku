@@ -78,7 +78,8 @@ export default class CardList extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Card List"
-                    backButtonTo="DeckDetails"/>
+                    backButtonTo="DeckDetails"
+                    currentPage="CardList"/>
             <ScrollView>
                 <List>
                     {renderedCards}

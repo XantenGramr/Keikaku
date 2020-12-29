@@ -175,7 +175,8 @@ export default class Review extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Flashcards Review"
-                    backButtonTo="DeckDetails"/>
+                    backButtonTo="DeckDetails"
+                    currentPage="Review"/>
             <LinearGradient
                         colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                         style={styles.linearGradient}

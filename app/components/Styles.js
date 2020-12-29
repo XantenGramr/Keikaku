@@ -53,6 +53,21 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color:'black'
     },
+    tabText: {
+        fontFamily: Platform.OS === 'ios' ? 'Pineapple Party - Personal Use' : 'Lemon Juice',
+        fontSize: 25,
+        color:'black'
+    },
+    readmeText: {
+        fontFamily: Platform.OS === 'ios' ? 'Pineapple Party - Personal Use' : 'Lemon Juice',
+        fontSize: 30,
+        color:'white'
+    },
+    readmeTitle: {
+        fontFamily: Platform.OS === 'ios' ? 'Pineapple Party - Personal Use' : 'Lemon Juice',
+        fontSize: 40,
+        color:'white'
+    },
 });
 
 export default styles;

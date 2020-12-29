@@ -78,7 +78,8 @@ export default class WeeknessCardList extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Card List"
-                    backButtonTo="WeeknessDetails"/>
+                    backButtonTo="WeeknessDetails"
+                    currentPage="WeeknessCardList"/>
             <ScrollView>
                 <List>
                     {renderedCards}

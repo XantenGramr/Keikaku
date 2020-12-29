@@ -175,7 +175,8 @@ export default class WeeknessReview extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Flashcards Review"
-                    backButtonTo="WeeknessDetails"/>
+                    backButtonTo="WeeknessDetails"
+                    currentPage="WeeknessReview"/>
             <LinearGradient
                         colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                         style={styles.linearGradient}

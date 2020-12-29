@@ -165,6 +165,14 @@ class Database  {
         }
     }
 
+    resetProgress = async (topic, day) => {
+        var sqlQueries = SqlQueries.resetProgress(topic, day);
+        for (var i = 0; i < sqlQueries.length; ++i)  {
+          var query = sqlQueries[i];
+          await this.executeSql(query, []);
+        }
+    }
+
     getConnection() {
         return conn;
     }

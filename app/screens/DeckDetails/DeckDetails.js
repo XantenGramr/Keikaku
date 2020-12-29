@@ -1,7 +1,7 @@
 import React from 'react';
-import { Header, Left, Body, Icon, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
+import { Toast, Header, Left, Body, Icon, Container, Title, H1, Content, Text, Thumbnail, StyleProvider, Button, List, ListItem, ListView } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Database from '../../database/Database';
 import CustomHeader from '../../components/CustomHeader';
@@ -87,6 +87,30 @@ export default class DeckDetails extends React.Component {
         this.setState({isReady: true});
     }
 
+    _reset = async () => {
+        var topic = this.state.topic;
+        var day = this.state.day;
+        await Database.resetProgress(topic, day);
+    }
+
+    resetProgress = () => {
+        Alert.alert("Hold on!", "Reset Progress will reset all your progress for this day, proceed?", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => {
+                this._reset();
+                this._init();
+                Toast.show({
+                    text: "Weekness Reset Done!",
+                    duration: 2000
+                })
+              }}
+          ]);
+    }
+
     startReview = () => {
         var day = this.state.day;
         var topic = this.state.topic;
@@ -126,7 +150,8 @@ export default class DeckDetails extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Details"
-                    backButtonTo="Weekly"/>
+                    backButtonTo="Weekly"
+                    currentPage="DeckDetails"/>
 
             <LinearGradient
                       colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
@@ -136,7 +161,6 @@ export default class DeckDetails extends React.Component {
                     <Row size={3} style={{ flex:1, justifyContent:"center"}}>
                         <Text style={styles.titleText}>{this.state.day}</Text>
                     </Row>
-                    <Row size={1}></Row>
                     <Row size={1}>
                         <Col size={1}></Col>
                         <Col size={8}>
@@ -160,6 +184,11 @@ export default class DeckDetails extends React.Component {
                         <Col size={8}>
                             <Text style={styles.text}>{this.state.done}</Text>
                         </Col>
+                    </Row>
+                    <Row size={1}>
+                        <Button style={{flex:1}} large rounded block start onPress={this.resetProgress}>
+                            <Text uppercase={false} style={styles.text}>Reset Progress</Text>
+                        </Button>
                     </Row>
                     <Row size={1}>
                         <Button style={{flex:1}} large rounded block start onPress={this.checkCards}>

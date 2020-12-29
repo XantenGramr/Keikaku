@@ -52,9 +52,19 @@ export default class Home extends React.Component {
             console.log("WILL UPDATE THE DB!");
 
             await Database.updateDatabase(DATABASE_VERSION);
+
+            const { navigate } = this.props.navigation;
+                navigate('Readme', {
+                    currentPage: "Home",
+                });
         } else {
             console.log("NO NEED TO UPDATE!");
         }
+
+        // console.log("TEST");
+
+        // let isFirstTimeOpen = await Database.getFirstTimeOpenStatus();
+        // console.log(isFirstTimeOpen);
         this.setState({isReady: true});
     }
 
@@ -68,7 +78,10 @@ export default class Home extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <Container>
-                <CustomHeader title="Home"/>
+                <CustomHeader 
+                    navigation={this.props.navigation}
+                    title="Home"
+                    currentPage="Home"/>
                 <LinearGradient
                     colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
                     style={styles.linearGradient}

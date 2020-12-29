@@ -118,6 +118,16 @@ const SqlQueries = {
         queries.push(query);
         return queries;
     },
+
+    resetProgress: function(topic, day) {
+        var queries = [];
+        var query = "";
+        query = query + "UPDATE ScheduledTable SET status = 0 WHERE topic = '" + topic + "' ";
+        query = query + "AND day = '" + day + "';";
+        queries.push(query);
+        return queries;
+    },
+    
 }
 
 export default SqlQueries;

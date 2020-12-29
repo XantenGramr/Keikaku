@@ -149,7 +149,8 @@ export default class WeeknessDetails extends React.Component {
             <CustomHeader
                     navigation={this.props.navigation}
                     title="Details"
-                    backButtonTo="Weekly"/>
+                    backButtonTo="Weekly"
+                    currentPage="WeeknessDetails"/>
 
             <LinearGradient
                       colors={['#4c44d7', '#3c3cff', '#02b4d9' ]}
