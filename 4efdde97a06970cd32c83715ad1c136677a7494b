@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72b66c77_47219792",
+        "filename": "App.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1018837
+      },
+      "writtenOn": "2021-10-21T02:49:41Z",
+      "side": 1,
+      "message": "Test",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 33,
+        "endChar": 3
+      },
+      "revId": "4efdde97a06970cd32c83715ad1c136677a7494b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
